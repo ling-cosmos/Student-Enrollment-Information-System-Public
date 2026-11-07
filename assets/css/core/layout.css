@@ -1,0 +1,323 @@
+/* =============================================================
+   SEIS — core/layout.css
+   Page structure: topbar, sidebar, main content, footer.
+   Depends on: variables.css, base.css
+   ============================================================= */
+
+/* ── Topbar (Bootstrap .navbar override) ── */
+.navbar.seis-topbar {
+  background: var(--color-primary) !important;
+  height: var(--topbar-height);
+  padding: 0 1.5rem;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+.mobile-nav-toggle,
+.brand-name-short {
+  display: none;
+}
+
+.desktop-sidebar-toggle {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,248,235,.38);
+  border-radius: var(--radius-md);
+  color: var(--color-text-inverse);
+  background: transparent;
+  margin-right: var(--space-2);
+}
+
+.mobile-nav-toggle {
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,248,235,.38);
+  border-radius: var(--radius-md);
+  color: var(--color-text-inverse);
+  background: transparent;
+  font-size: 1.25rem;
+}
+
+.seis-topbar .navbar-brand {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--color-text-inverse) !important;
+  letter-spacing: .02em;
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+.seis-topbar .navbar-brand .brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  font-size: .95rem;
+  color: var(--color-primary-dark);
+  flex-shrink: 0;
+}
+
+.seis-topbar .topbar-user {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  color: var(--color-sidebar-text);
+  font-size: var(--font-size-sm);
+}
+.seis-topbar .topbar-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: .72rem;
+  color: var(--color-primary-dark);
+  flex-shrink: 0;
+}
+.seis-topbar .topbar-role {
+  font-size: .68rem;
+  padding: .12rem .5rem;
+  border-radius: var(--radius-pill);
+  color: var(--color-primary-dark);
+  background: var(--color-accent-soft);
+}
+.seis-topbar .btn-topbar {
+  font-size: .8rem;
+  padding: .3rem .8rem;
+  border-radius: var(--radius-xs);
+  min-height: 40px;
+  color: var(--color-text-inverse);
+  border: 1px solid rgba(255,248,235,.38);
+  background: transparent;
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+.seis-topbar .btn-topbar:hover {
+  background: rgba(255,255,255,.14);
+  color: var(--color-text-inverse);
+}
+
+/* ── Body layout wrapper ── */
+.seis-body-wrap {
+  display: flex;
+  min-height: calc(100vh - var(--topbar-height));
+}
+
+/* ── Sidebar ── */
+.seis-sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background: var(--color-primary-dark);
+  padding: .85rem 0 2rem;
+  box-shadow: var(--shadow-sm);
+  min-height: calc(100vh - var(--topbar-height));
+  position: sticky;
+  top: var(--topbar-height);
+  align-self: flex-start;
+  overflow-y: auto;
+}
+
+.sidebar-group-label {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  padding: .9rem 1.15rem .3rem;
+  display: block;
+}
+
+.sidebar-group-toggle {
+  width: 100%;
+  min-height: 40px;
+  padding: .9rem 1.15rem .3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.sidebar-group-toggle i { transition: transform var(--transition-fast); }
+.sidebar-group-toggle[aria-expanded="false"] i { transform: rotate(-90deg); }
+.sidebar-subnav { list-style: none; margin: 0; padding: 0; }
+.sidebar-subnav[hidden] { display: none; }
+
+body.sidebar-collapsed { --sidebar-width: 72px; }
+body.sidebar-collapsed .seis-sidebar .nav-link {
+  justify-content: center;
+  gap: 0;
+  font-size: 0;
+  padding-inline: 0;
+}
+body.sidebar-collapsed .seis-sidebar .nav-link i { font-size: 1.05rem; }
+body.sidebar-collapsed .sidebar-group-label,
+body.sidebar-collapsed .sidebar-group-toggle { display: none; }
+@media (min-width: 901px) {
+  body.sidebar-collapsed .sidebar-subnav[hidden] { display: block !important; }
+}
+
+.seis-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: .58rem;
+  color: var(--color-sidebar-text);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  min-height: 40px;
+  padding: .52rem 1rem;
+  border-radius: var(--radius-sm);
+  margin: 1px .55rem;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  text-decoration: none;
+}
+.seis-sidebar .nav-link i {
+  font-size: .95rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.seis-sidebar .nav-link:hover {
+  background: rgba(255,248,235,.09);
+  color: var(--color-text-inverse);
+}
+.seis-sidebar .nav-link.active {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  font-weight: 600;
+  box-shadow: inset 1px 0 0 var(--color-accent);
+}
+.seis-sidebar .nav-link.active i {
+  color: var(--color-accent);
+}
+
+.seis-topbar a:focus-visible,
+.seis-topbar button:focus-visible,
+.seis-sidebar a:focus-visible {
+  outline-color: var(--color-accent);
+}
+
+/* ── Main content ── */
+.seis-main {
+  flex: 1;
+  padding: 1.75rem 2rem;
+  min-width: 0;
+  background: var(--color-bg);
+}
+
+/* ── Page header ── */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-bottom: 1.5rem;
+}
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-primary-dark);
+  margin: 0;
+}
+.page-subtitle {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-top: .2rem;
+}
+.page-actions,
+.page-header-actions {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* ── Flash message container ── */
+.flash-area {
+  margin-bottom: 1.1rem;
+}
+
+/* ── Footer ── */
+.seis-footer {
+  background: var(--color-surface-muted);
+  border-top: var(--border-light);
+  text-align: center;
+  padding: .7rem 1rem;
+  font-size: .73rem;
+  color: var(--color-text-muted);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .navbar.seis-topbar {
+    padding: 0 var(--space-3);
+    gap: var(--space-2);
+  }
+  .mobile-nav-toggle { display: inline-flex; flex-shrink: 0; }
+  .desktop-sidebar-toggle { display: none; }
+  body.sidebar-collapsed { --sidebar-width: 230px; }
+  body.sidebar-collapsed .seis-sidebar .nav-link { justify-content: flex-start; gap: .58rem; font-size: var(--font-size-sm); padding: .52rem 1rem; }
+  body.sidebar-collapsed .sidebar-group-label,
+  body.sidebar-collapsed .sidebar-group-toggle { display: flex; }
+  .brand-name-full { display: none; }
+  .brand-name-short { display: inline; }
+  .seis-topbar .navbar-brand { font-size: 1rem; margin-right: 0; }
+  .seis-topbar .topbar-user { margin-left: auto !important; margin-right: 0 !important; }
+  .topbar-user-name,
+  .seis-topbar .topbar-role,
+  .topbar-action-label { display: none; }
+  .seis-topbar .btn-topbar {
+    width: 40px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .seis-sidebar {
+    display: block;
+    position: fixed;
+    inset: var(--topbar-height) auto 0 0;
+    height: calc(100vh - var(--topbar-height));
+    min-height: 0;
+    z-index: 1040;
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform var(--transition-base), visibility 0s linear var(--transition-base);
+    box-shadow: var(--shadow-lg);
+  }
+  .seis-sidebar.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+  .seis-main { padding: var(--space-4); width: 100%; }
+  .page-header { flex-direction: column; }
+  .page-header-actions { width: 100%; }
+}
+
+/* ── Print ── */
+@media print {
+  .seis-sidebar, .seis-topbar, .page-actions,
+  .seis-footer { display: none !important; }
+  .seis-main { padding: 0; }
+}

@@ -1,0 +1,120 @@
+/* =============================================================
+   SEIS — core/base.css
+   Global reset, html/body, typography, links, scrollbar.
+   Depends on: variables.css
+   ============================================================= */
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  line-height: 1.65;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Headings ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-primary-dark);
+  line-height: 1.25;
+  margin-top: 0;
+}
+
+/* ── Links ── */
+a {
+  color: var(--color-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover { color: var(--color-primary); }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  box-shadow: var(--focus-ring);
+}
+
+::selection {
+  color: var(--color-primary-dark);
+  background: var(--color-accent-soft);
+}
+
+/* ── Lists ── */
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+/* ── Images ── */
+img { max-width: 100%; height: auto; display: block; }
+
+/* ── HR / Divider ── */
+hr, .seis-divider {
+  border: none;
+  border-top: var(--border-light);
+  margin: 1.25rem 0;
+}
+
+/* ── Utility text helpers ── */
+.text-muted-sm  { font-size: var(--font-size-xs); color: var(--color-text-muted); }
+.text-brown     { color: var(--color-primary); }
+.text-caramel   { color: var(--color-secondary); }
+.font-display   { font-family: var(--font-display); }
+.fw-600         { font-weight: 600; }
+.fw-700         { font-weight: 700; }
+.d-iflex        { display: inline-flex; align-items: center; }
+.gap-xs         { gap: .35rem; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar           { width: 6px; height: 6px; }
+::-webkit-scrollbar-track     { background: transparent; }
+::-webkit-scrollbar-thumb     { background: var(--color-border-strong); border-radius: var(--radius-pill); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-secondary); }
+
+/* ── Bootstrap alert overrides for SEIS colours ── */
+.alert-success { background: var(--color-success-bg); border-color: var(--color-success); color: var(--color-success); }
+.alert-danger  { background: var(--color-error-bg); border-color: var(--color-error); color: var(--color-error); }
+.alert-warning { background: var(--color-warning-bg); border-color: var(--color-warning); color: var(--color-warning); }
+.alert-info    { background: var(--color-info-bg); border-color: var(--color-info); color: var(--color-info); }
+
+/* ── Badges ── */
+.badge-seis {
+  display: inline-block;
+  padding: .22rem .72rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: .04em;
+  border: 1px solid transparent;
+}
+.badge-active, .badge-enrolled { background: var(--color-success-bg); color: var(--color-success); border-color: var(--color-success); }
+.badge-inactive, .badge-dropped { background: var(--color-error-bg); color: var(--color-error); border-color: var(--color-error); }
+.badge-completed, .badge-graduated { background: var(--color-info-bg); color: var(--color-info); border-color: var(--color-info); }
+.badge-brown { background: var(--color-surface-muted); color: var(--color-primary); border-color: var(--color-border-strong); }
+.badge-caramel, .badge-admin { background: var(--color-accent-soft); color: var(--color-primary); border-color: var(--color-accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ── Print base ── */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; color: black; }
+}

@@ -1,0 +1,28 @@
+/* =============================================================
+   SEIS — module/settings.css
+   Styles for admin/settings/* pages.
+   Load in: settings/academic_year.php, settings/semester.php
+   ============================================================= */
+
+/* Active year / semester highlighted row */
+.seis-table tbody tr.row-active td {
+  background: var(--color-accent-soft);
+}
+.seis-table tbody tr.row-active td:first-child {
+  box-shadow: inset 1px 0 0 var(--color-accent-hover);
+}
+
+/* Settings page description block */
+.settings-desc {
+  background: var(--color-accent-soft);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: .75rem 1rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-dark);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: .55rem;
+}
+.settings-desc i { color: var(--color-secondary); font-size: 1rem; margin-top: .05rem; }

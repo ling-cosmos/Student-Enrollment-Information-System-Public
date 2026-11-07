@@ -1,0 +1,26 @@
+/* =============================================================
+   SEIS — module/courses.css
+   Styles for admin/courses/* pages.
+   Load in: all courses pages
+   ============================================================= */
+
+/* Course code cell — monospace feel */
+.course-code-cell {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: var(--font-size-xs);
+  letter-spacing: .04em;
+  color: var(--color-primary);
+}
+
+/* Course form max-width wrapper */
+.course-form-wrap { max-width: 660px; }
+
+/* Capacity warning indicator */
+.cap-warning {
+  color: var(--color-error);
+  font-size: var(--font-size-xs);
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  margin-top: .2rem;
+}

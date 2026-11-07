@@ -1,0 +1,101 @@
+/* =============================================================
+   SEIS — core/variables.css
+   All CSS custom properties (design tokens).
+   Import this first. Never put visual rules here.
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Brand */
+  --color-primary: #4A2F21;
+  --color-primary-dark: #2F1D15;
+  --color-secondary: #8A5A3B;
+  --color-accent: #D7A44A;
+  --color-accent-hover: #C49139;
+  --color-accent-soft: #F4E7CC;
+
+  /* Neutrals */
+  --color-bg: #F7F2E8;
+  --color-surface: #FFFCF7;
+  --color-surface-muted: #EFE6D9;
+  --color-border: #DDD0C1;
+  --color-border-strong: #C9B7A4;
+  --color-control-border: #8A7564;
+  --color-focus: #8A5A3B;
+  --color-text: #2B211B;
+  --color-text-muted: #6F6259;
+  --color-text-inverse: #FFF8EB;
+  --color-sidebar-text: #D8C9BA;
+
+  /* Semantic pairs */
+  --color-success: #2F6B4F;
+  --color-success-bg: #E5F1EA;
+  --color-warning: #8A5A00;
+  --color-warning-bg: #FFF0CF;
+  --color-error: #A13D3D;
+  --color-error-bg: #FBE7E7;
+  --color-info: #3D6470;
+  --color-info-bg: #E5EFF2;
+
+  /* Temporary legacy aliases while page modules migrate */
+  --clr-cream: var(--color-bg);
+  --clr-cream-dark: var(--color-surface-muted);
+  --clr-sand: var(--color-border-strong);
+  --clr-sand-light: var(--color-border);
+  --clr-caramel: var(--color-accent);
+  --clr-caramel-dk: var(--color-secondary);
+  --clr-brown: var(--color-primary);
+  --clr-brown-dk: var(--color-primary-dark);
+  --clr-espresso: var(--color-primary-dark);
+  --clr-text: var(--color-text);
+  --clr-muted: var(--color-text-muted);
+  --clr-light-text: var(--color-text-inverse);
+  --clr-success: var(--color-success);
+  --clr-success-bg: var(--color-success-bg);
+  --clr-danger: var(--color-error);
+  --clr-danger-bg: var(--color-error-bg);
+  --clr-warning: var(--color-warning);
+  --clr-warning-bg: var(--color-warning-bg);
+  --clr-info: var(--color-info);
+  --clr-info-bg: var(--color-info-bg);
+
+  /* Layout and spacing */
+  --sidebar-width: 230px;
+  --topbar-height: 60px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Shape and borders */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+  --border-light: 1px solid var(--color-border);
+  --border-base: 1px solid var(--color-border-strong);
+
+  /* Elevation and focus */
+  --shadow-xs: 0 1px 3px rgba(47, 29, 21, .06);
+  --shadow-sm: 0 2px 8px rgba(47, 29, 21, .09);
+  --shadow-md: 0 8px 24px rgba(47, 29, 21, .13);
+  --shadow-lg: 0 18px 48px rgba(47, 29, 21, .18);
+  --focus-ring: 0 0 0 3px rgba(138, 90, 59, .25);
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  --font-size-xs: .75rem;
+  --font-size-sm: .875rem;
+  --font-size-md: .9375rem;
+  --font-size-lg: 1.125rem;
+
+  /* Motion */
+  --transition-fast: .15s ease;
+  --transition-base: .22s ease;
+  --transition-slow: .35s ease;
+}
