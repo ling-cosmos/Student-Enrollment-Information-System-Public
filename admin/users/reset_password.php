@@ -2,7 +2,7 @@
 require_once dirname(dirname(__DIR__)) . '/config/constants.php';
 require_once dirname(dirname(__DIR__)) . '/config/database.php';
 require_once dirname(dirname(__DIR__)) . '/includes/functions.php';
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 requireRole('admin');
 
 $id = (int)($_GET['id'] ?? 0);

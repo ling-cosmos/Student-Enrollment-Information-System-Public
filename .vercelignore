@@ -1,0 +1,8 @@
+.env*
+docs/
+seis.sql
+test_db.php
+.git/
+node_modules/
+sessions/
+*.deb

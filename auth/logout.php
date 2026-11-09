@@ -5,7 +5,7 @@
 require_once dirname(__DIR__) . '/config/constants.php';
 require_once dirname(__DIR__) . '/includes/functions.php';
 
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 session_unset();   // Clear all session variables
 session_destroy(); // Destroy the session file on the server
 

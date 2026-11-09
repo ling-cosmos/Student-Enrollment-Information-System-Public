@@ -1,0 +1,6 @@
+{
+  "outputDirectory": "public",
+  "buildCommand": "mkdir -p public/assets && cp -r assets/css assets/js assets/img public/assets/",
+  "functions": { "api/index.php": { "runtime": "vercel-php@0.9.0", "includeFiles": "{admin,auth,handlers,includes,config,hosting}/**" } },
+  "rewrites": [{ "source": "/:path*", "destination": "/api/index.php" }]
+}

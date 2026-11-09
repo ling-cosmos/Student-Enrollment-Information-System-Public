@@ -2,7 +2,7 @@
 require_once dirname(__DIR__) . '/config/constants.php';
 require_once dirname(__DIR__) . '/config/database.php';
 require_once dirname(__DIR__) . '/includes/functions.php';
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 requireRole('admin');
 validateCsrf();
 
@@ -39,7 +39,7 @@ if ($action === 'add') {
         ]);
         flash('success', 'User created successfully.');
     } catch (PDOException $e) {
-        if ($e->getCode() === '23000') {
+        if (in_array($e->getCode(), ['23000', '23505'], true)) {
             flash('danger', 'Username or email already exists.');
         } else {
             flash('danger', 'Error: ' . $e->getMessage());
@@ -51,7 +51,7 @@ if ($action === 'add') {
 if ($action === 'toggle') {
     $id = (int)($_POST['id'] ?? 0);
     if ($id && $id !== (int)$_SESSION['user_id']) {
-        $pdo->prepare("UPDATE users SET is_active = NOT is_active WHERE id = ?")->execute([$id]);
+        $pdo->prepare("UPDATE users SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE id = ?")->execute([$id]);
         flash('success', 'User status updated.');
     }
     redirect(BASE_URL . '/admin/users/manage.php');
@@ -118,7 +118,7 @@ if ($action === 'edit') {
         flash('success', 'User details updated.');
         redirect(BASE_URL . '/admin/users/manage.php');
     } catch (PDOException $e) {
-        flash('danger', $e->getCode() === '23000' ? 'Username or email already exists.' : 'Unable to update the user.');
+        flash('danger', in_array($e->getCode(), ['23000', '23505'], true) ? 'Username or email already exists.' : 'Unable to update the user.');
         redirect(BASE_URL . '/admin/users/edit.php?id=' . $id);
     }
 }

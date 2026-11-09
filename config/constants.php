@@ -6,7 +6,7 @@ define('APP_NAME',    'SEIS - Student Enrollment Information System');
 define('APP_VERSION', '1.0.0');
 
 // Base URL — adjust to match your XAMPP folder name
-define('BASE_URL', 'http://localhost:8000');
+define('BASE_URL', getenv('PORTFOLIO_DEMO') === 'true' ? '' : (getenv('APP_URL') ?: 'http://localhost:8000'));
 
 // Absolute path shortcuts
 define('ROOT_PATH',    dirname(__DIR__));           // /htdocs/seis

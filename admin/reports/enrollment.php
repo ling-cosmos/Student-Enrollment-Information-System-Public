@@ -14,13 +14,13 @@ $completed    = (int)$pdo->query("SELECT COUNT(*) FROM enrollments WHERE status 
 $bySemester = $pdo->query(
     "SELECT ay.year_label, sem.name AS semester_name,
             COUNT(e.id) AS total,
-            SUM(e.status = 'Enrolled')  AS enrolled,
-            SUM(e.status = 'Dropped')   AS dropped,
-            SUM(e.status = 'Completed') AS completed
+            SUM(CASE WHEN e.status = 'Enrolled' THEN 1 ELSE 0 END) AS enrolled,
+            SUM(CASE WHEN e.status = 'Dropped' THEN 1 ELSE 0 END) AS dropped,
+            SUM(CASE WHEN e.status = 'Completed' THEN 1 ELSE 0 END) AS completed
      FROM enrollments e
      JOIN semesters sem ON e.semester_id = sem.id
      JOIN academic_years ay ON sem.academic_year_id = ay.id
-     GROUP BY e.semester_id
+     GROUP BY e.semester_id, ay.year_label, sem.name, sem.start_date
      ORDER BY ay.year_label DESC, sem.start_date"
 )->fetchAll();
 ?>

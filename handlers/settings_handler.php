@@ -2,7 +2,7 @@
 require_once dirname(__DIR__) . '/config/constants.php';
 require_once dirname(__DIR__) . '/config/database.php';
 require_once dirname(__DIR__) . '/includes/functions.php';
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 requireRole('admin');
 validateCsrf();
 
@@ -31,7 +31,7 @@ if ($action === 'add_year') {
             ->execute([$label, $isActive]);
         flash('success', "Academic year '{$label}' added.");
     } catch (PDOException $e) {
-        if ($e->getCode() === '23000') {
+        if (in_array($e->getCode(), ['23000', '23505'], true)) {
             flash('danger', 'That year label already exists.');
         } else {
             flash('danger', 'Error: ' . $e->getMessage());

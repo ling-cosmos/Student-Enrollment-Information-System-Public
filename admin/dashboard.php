@@ -55,7 +55,7 @@ $capacityWarningStmt = $pdo->prepare(
        LEFT JOIN enrollments e ON e.course_id = c.id AND e.status = 'Enrolled' AND e.semester_id = ?
        WHERE c.is_active = 1 AND c.capacity > 0
        GROUP BY c.id, c.capacity
-       HAVING COUNT(e.id) / c.capacity >= .9
+       HAVING COUNT(e.id) * 1.0 / c.capacity >= .9
      ) capacity_alerts"
 );
 $capacityWarningStmt->execute([$selectedSemesterId]);
@@ -66,7 +66,7 @@ $enrollmentTrend = $pdo->query(
      FROM semesters sem
      JOIN academic_years ay ON ay.id = sem.academic_year_id
      LEFT JOIN enrollments e ON e.semester_id = sem.id AND e.status = 'Enrolled'
-     GROUP BY sem.id
+     GROUP BY sem.id, ay.year_label
      ORDER BY sem.start_date DESC
      LIMIT 6"
 )->fetchAll();

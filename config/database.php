@@ -13,6 +13,10 @@ define('DB_CHARSET', 'utf8mb4');
  * Call getPDO() anywhere you need the database.
  */
 function getPDO(): PDO {
+    if (getenv('PORTFOLIO_DEMO') === 'true') {
+        require_once dirname(__DIR__) . '/hosting/demo.php';
+        return demoDatabase();
+    }
     static $pdo = null;          // Stored once, reused on every call
 
     if ($pdo === null) {

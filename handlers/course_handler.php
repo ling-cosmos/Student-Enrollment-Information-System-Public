@@ -2,7 +2,7 @@
 require_once dirname(__DIR__) . '/config/constants.php';
 require_once dirname(__DIR__) . '/config/database.php';
 require_once dirname(__DIR__) . '/includes/functions.php';
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 requireLogin();
 validateCsrf();
 
@@ -28,7 +28,7 @@ if ($action === 'add') {
         ]);
         flash('success', 'Course added successfully.');
     } catch (PDOException $e) {
-        if ($e->getCode() === '23000') {
+        if (in_array($e->getCode(), ['23000', '23505'], true)) {
             flash('danger', 'Course code already exists.');
         } else {
             flash('danger', 'Error: ' . $e->getMessage());

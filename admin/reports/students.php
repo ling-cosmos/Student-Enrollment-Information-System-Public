@@ -11,7 +11,8 @@ $active     = (int)$pdo->query("SELECT COUNT(*) FROM students WHERE status = 'Ac
 $inactive   = (int)$pdo->query("SELECT COUNT(*) FROM students WHERE status = 'Inactive'")->fetchColumn();
 $graduated  = (int)$pdo->query("SELECT COUNT(*) FROM students WHERE status = 'Graduated'")->fetchColumn();
 $dropped    = (int)$pdo->query("SELECT COUNT(*) FROM students WHERE status = 'Dropped'")->fetchColumn();
-$last30     = (int)$pdo->query("SELECT COUNT(*) FROM students WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)")->fetchColumn();
+$recentDate = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql' ? "NOW() - INTERVAL '30 days'" : 'DATE_SUB(NOW(), INTERVAL 30 DAY)';
+$last30     = (int)$pdo->query("SELECT COUNT(*) FROM students WHERE created_at >= $recentDate")->fetchColumn();
 
 $byGender   = $pdo->query("SELECT gender, COUNT(*) AS cnt FROM students WHERE gender IS NOT NULL GROUP BY gender ORDER BY cnt DESC")->fetchAll();
 $byStatus   = $pdo->query("SELECT status, COUNT(*) AS cnt FROM students GROUP BY status ORDER BY cnt DESC")->fetchAll();

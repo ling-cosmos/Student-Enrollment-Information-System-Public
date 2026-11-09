@@ -98,5 +98,6 @@ if (str_contains($requestPath, '/admin/') || str_ends_with($requestPath, '/auth/
 <?php require_once dirname(__DIR__) . '/includes/sidebar.php'; ?>
 <main class="seis-main">
 <div class="flash-area">
+<?php if (getenv('PORTFOLIO_DEMO') === 'true'): ?><div class="alert alert-info">Original SEIS app · Your own sample-data sandbox. Sessions expire after six hours. Enter fictional information only. Photo uploads are disabled. <a href="https://ling-cosmos.github.io/Portfolio/#projects">Back to portfolio ↗</a></div><?php endif; ?>
 <?php showFlash(); ?>
 </div>

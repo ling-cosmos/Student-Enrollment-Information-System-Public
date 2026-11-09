@@ -3,7 +3,7 @@
 require_once dirname(__DIR__) . '/config/constants.php';
 require_once dirname(__DIR__) . '/config/database.php';
 require_once dirname(__DIR__) . '/includes/functions.php';
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 requireLogin();
 validateCsrf();
 
@@ -16,6 +16,7 @@ $action = $_POST['action'] ?? '';
 
 // ── Photo upload helper ──
 function handlePhotoUpload(): ?string {
+    if (getenv('PORTFOLIO_DEMO') === 'true') return null;
     if (empty($_FILES['photo']['name'])) return null;
     $file = $_FILES['photo'];
     if ($file['error'] !== UPLOAD_ERR_OK) return null;
@@ -58,7 +59,7 @@ if ($action === 'add') {
             ':email'       => trim($_POST['email']       ?? ''),
             ':phone'       => trim($_POST['phone']       ?? '') ?: null,
             ':birthdate'   => trim($_POST['birthdate']   ?? '') ?: null,
-            ':gender'      => $_POST['gender']  ?? null,
+            ':gender'      => trim($_POST['gender'] ?? '') ?: null,
             ':address'     => trim($_POST['address'] ?? '') ?: null,
             ':photo'       => $photo,
             ':status'      => $_POST['status'] ?? 'Active',
@@ -67,7 +68,7 @@ if ($action === 'add') {
         flash('success', 'Student added successfully.');
         redirect(BASE_URL . '/admin/students/profile.php?id=' . $newId);
     } catch (PDOException $e) {
-        if ($e->getCode() === '23000') {
+        if (in_array($e->getCode(), ['23000', '23505'], true)) {
             flash('danger', 'Student number or email already exists.');
         } else {
             flash('danger', 'Database error: ' . $e->getMessage());
@@ -94,7 +95,7 @@ if ($action === 'edit') {
         ':email'       => trim($_POST['email']       ?? ''),
         ':phone'       => trim($_POST['phone']       ?? '') ?: null,
         ':birthdate'   => trim($_POST['birthdate']   ?? '') ?: null,
-        ':gender'      => $_POST['gender']  ?? null,
+        ':gender'      => trim($_POST['gender'] ?? '') ?: null,
         ':address'     => trim($_POST['address'] ?? '') ?: null,
         ':status'      => $_POST['status'] ?? 'Active',
         ':id'          => $id,

@@ -24,3 +24,7 @@ Thumbs.db
 # Dependencies, if added later
 vendor/
 node_modules/
+public/
+*.deb
+.vercel
+.env*
