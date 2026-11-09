@@ -1,6 +1,15 @@
 {
   "outputDirectory": "public",
   "buildCommand": "mkdir -p public/assets && cp -r assets/css assets/js assets/img public/assets/",
-  "functions": { "api/index.php": { "runtime": "vercel-php@0.9.0", "includeFiles": "{admin,auth,handlers,includes,config,hosting}/**" } },
-  "rewrites": [{ "source": "/:path*", "destination": "/api/index.php" }]
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.9.0",
+      "includeFiles": "{index.php,admin/**,auth/**,handlers/**,includes/**,config/**,hosting/**}",
+      "excludeFiles": "{node_modules/**,.git/**,.vercel/**,.env*,**/.env*,*.deb,docs/**,public/**,seis.sql,test_db.php,now.json,.nowignore,vercel.json,.vercelignore}"
+    }
+  },
+  "rewrites": [
+    { "source": "/", "destination": "/api/index.php" },
+    { "source": "/:path*", "destination": "/api/index.php" }
+  ]
 }
