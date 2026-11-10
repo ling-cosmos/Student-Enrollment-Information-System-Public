@@ -6,7 +6,14 @@ function demoConnection(): PDO {
     $url = parse_url(getenv('DATABASE_URL') ?: '');
     if (!$url || empty($url['host']) || empty($url['path'])) throw new RuntimeException('Demo database is not configured.');
     $ssl = in_array($url['host'], ['127.0.0.1','localhost'], true) ? 'disable' : 'require';
-    return new PDO('pgsql:host=' . $url['host'] . ';port=' . ($url['port'] ?? 5432) . ';dbname=' . ltrim($url['path'], '/') . ';sslmode=' . $ssl, rawurldecode($url['user'] ?? ''), rawurldecode($url['pass'] ?? ''), [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_EMULATE_PREPARES => true]);
+    $options = '';
+    if (str_ends_with($url['host'], '.neon.tech')) {
+        // The bundled libpq may lack SNI; Neon also accepts an explicit endpoint.
+        $endpoint = preg_replace('/-pooler$/', '', explode('.', $url['host'])[0]);
+        if (!preg_match('/^ep-[a-z0-9-]+$/D', $endpoint)) throw new RuntimeException('Invalid Neon endpoint.');
+        $options = ';options=endpoint=' . $endpoint;
+    }
+    return new PDO('pgsql:host=' . $url['host'] . ';port=' . ($url['port'] ?? 5432) . ';dbname=' . ltrim($url['path'], '/') . ';sslmode=' . $ssl . $options, rawurldecode($url['user'] ?? ''), rawurldecode($url['pass'] ?? ''), [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_EMULATE_PREPARES => true]);
 }
 
 final class DemoSessions implements SessionHandlerInterface {
