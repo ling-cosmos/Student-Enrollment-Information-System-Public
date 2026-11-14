@@ -21,12 +21,23 @@ foreach ($semesters as $semester) {
 }
 if (!$activeSemester && $semesters) $activeSemester = $semesters[0];
 $selectedSemesterId = (int)($activeSemester['id'] ?? 0);
+$recentEnrollmentStmt = $pdo->prepare("SELECT s.id, s.first_name, s.last_name, c.course_code, e.status FROM enrollments e JOIN students s ON s.id = e.student_id JOIN courses c ON c.id = e.course_id WHERE e.semester_id = ? ORDER BY e.enrolled_at DESC LIMIT 5");
+$recentEnrollmentStmt->execute([$selectedSemesterId]);
+$recentEnrollments = $recentEnrollmentStmt->fetchAll();
+$capacityStmt = $pdo->prepare("SELECT COALESCE(SUM(c.capacity), 0) AS capacity, COALESCE(SUM((SELECT COUNT(*) FROM enrollments e WHERE e.course_id = c.id AND e.semester_id = ? AND e.status = 'Enrolled')), 0) AS occupied FROM courses c WHERE c.is_active = 1 AND c.capacity > 0");
+$capacityStmt->execute([$selectedSemesterId]);
+$capacitySummary = $capacityStmt->fetch();
+$capacityPercent = (int)$capacitySummary['capacity'] > 0 ? (int)round(100 * (int)$capacitySummary['occupied'] / (int)$capacitySummary['capacity']) : 0;
 
 $totalStudents  = (int)$pdo->query("SELECT COUNT(*) FROM students")->fetchColumn();
 $totalCourses   = (int)$pdo->query("SELECT COUNT(*) FROM courses WHERE is_active = 1")->fetchColumn();
 $enrollmentCountStmt = $pdo->prepare("SELECT COUNT(*) FROM enrollments WHERE status = 'Enrolled' AND semester_id = ?");
 $enrollmentCountStmt->execute([$selectedSemesterId]);
 $totalEnrolled = (int)$enrollmentCountStmt->fetchColumn();
+$todayStmt = $pdo->prepare("SELECT COUNT(*) FROM enrollments WHERE status = 'Enrolled' AND semester_id = ? AND DATE(enrolled_at) = CURRENT_DATE");
+$todayStmt->execute([$selectedSemesterId]);
+$enrolledToday = (int)$todayStmt->fetchColumn();
+$availableSlots = max(0, (int)$capacitySummary['capacity'] - (int)$capacitySummary['occupied']);
 $totalUsers = ($_SESSION['user_role'] ?? '') === 'admin'
     ? (int)$pdo->query("SELECT COUNT(*) FROM users WHERE is_active = 1")->fetchColumn()
     : 0;
@@ -88,8 +99,8 @@ $recentActivity = $pdo->query(
 
 <div class="page-header">
   <div class="page-header-left">
-    <h1>Dashboard</h1>
-    <p class="page-subtitle">Welcome back, <?= sanitize($_SESSION['full_name'] ?? 'Administrator') ?></p>
+    <h1>Welcome back, <?= sanitize($_SESSION['full_name'] ?? 'Administrator') ?>.</h1>
+    <p class="page-subtitle">Here’s what is happening across the campus today.</p>
   </div>
   <div class="page-header-actions">
     <a href="<?= BASE_URL ?>/admin/students/add.php" class="btn-seis">
@@ -139,6 +150,24 @@ $recentActivity = $pdo->query(
 </div>
 
 <!-- Dashboard Grid -->
+<div class="stats-row">
+  <a class="stat-card stat-card-link" href="<?= BASE_URL ?>/admin/enrollment/view.php?semester_id=<?= $selectedSemesterId ?>"><div class="stat-icon"><i class="bi bi-calendar-check" aria-hidden="true"></i></div><div class="stat-body"><div class="stat-number"><?= number_format($enrolledToday) ?></div><div class="stat-label">Enrolled today</div></div></a>
+  <a class="stat-card stat-card-link" href="<?= BASE_URL ?>/admin/courses/view.php"><div class="stat-icon"><i class="bi bi-grid" aria-hidden="true"></i></div><div class="stat-body"><div class="stat-number"><?= number_format($availableSlots) ?></div><div class="stat-label">Available slots</div></div></a>
+</div>
+<div class="dashboard-grid" style="margin-bottom:var(--space-6)">
+  <section class="seis-card">
+    <div class="seis-card-header"><i class="bi bi-journal-check" aria-hidden="true"></i> Recent enrollments</div>
+    <div style="overflow-x:auto"><table class="seis-table"><thead><tr><th>Student</th><th>Course</th><th>Status</th></tr></thead><tbody>
+      <?php foreach ($recentEnrollments as $entry): ?>
+      <tr><td><a href="<?= BASE_URL ?>/admin/students/profile.php?id=<?= (int)$entry['id'] ?>"><?= sanitize($entry['first_name'] . ' ' . $entry['last_name']) ?></a></td><td><?= sanitize($entry['course_code']) ?></td><td><?= statusBadge($entry['status']) ?></td></tr>
+      <?php endforeach; if (!$recentEnrollments): ?><tr><td colspan="3"><div class="empty-state empty-state-compact"><p>No enrollments in this semester yet.</p></div></td></tr><?php endif; ?>
+    </tbody></table></div>
+  </section>
+  <section class="seis-card">
+    <div class="seis-card-header"><i class="bi bi-pie-chart" aria-hidden="true"></i> Enrollment status</div>
+    <div class="enrollment-status"><div class="enrollment-ring" style="--fill:<?= min(100, $capacityPercent) ?>%" role="img" aria-label="<?= $capacityPercent ?> percent of current semester capacity used"><strong><?= $capacityPercent ?>%</strong></div><p><?= (int)$capacitySummary['capacity'] ? 'Current semester capacity' : 'No course capacity configured' ?></p></div>
+  </section>
+</div>
 <div class="dashboard-grid">
   <!-- Recent Students -->
   <div class="seis-card">

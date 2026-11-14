@@ -14,6 +14,7 @@ function isActive(string $dir, string $page = ''): string {
 }
 ?>
 <nav class="seis-sidebar" id="seisSidebar" aria-label="Primary navigation">
+    <a class="sidebar-brand" href="<?= BASE_URL ?>/admin/dashboard.php"><i class="bi bi-mortarboard" aria-hidden="true"></i><span><strong>SEIS</strong><small>ACADEMIC ADMIN</small></span></a>
     <ul class="nav flex-column">
 
         <li>

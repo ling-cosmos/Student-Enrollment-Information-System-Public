@@ -58,6 +58,7 @@ if (str_contains($requestPath, '/admin/') || str_ends_with($requestPath, '/auth/
     <!-- Module CSS: <?= sanitize($mod) ?> -->
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/module/<?= sanitize($mod) ?>.css">
     <?php endforeach; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/core/academic.css">
 </head>
 <body>
 

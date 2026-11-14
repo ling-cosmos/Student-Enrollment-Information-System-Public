@@ -4,29 +4,29 @@
    Import this first. Never put visual rules here.
    ============================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
 
 :root {
   /* Brand */
-  --color-primary: #4A2F21;
-  --color-primary-dark: #2F1D15;
-  --color-secondary: #8A5A3B;
-  --color-accent: #D7A44A;
-  --color-accent-hover: #C49139;
-  --color-accent-soft: #F4E7CC;
+  --color-primary: #176DA6;
+  --color-primary-dark: #071C32;
+  --color-secondary: #176DA6;
+  --color-accent: #7DD3FC;
+  --color-accent-hover: #38BDF8;
+  --color-accent-soft: #DFF2FF;
 
   /* Neutrals */
-  --color-bg: #F7F2E8;
-  --color-surface: #FFFCF7;
-  --color-surface-muted: #EFE6D9;
-  --color-border: #DDD0C1;
-  --color-border-strong: #C9B7A4;
-  --color-control-border: #8A7564;
-  --color-focus: #8A5A3B;
-  --color-text: #2B211B;
-  --color-text-muted: #6F6259;
-  --color-text-inverse: #FFF8EB;
-  --color-sidebar-text: #D8C9BA;
+  --color-bg: #F7FBFF;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F2F8FC;
+  --color-border: #DCE7EF;
+  --color-border-strong: #C4D5E2;
+  --color-control-border: #70879B;
+  --color-focus: #176DA6;
+  --color-text: #102A3E;
+  --color-text-muted: #536A7D;
+  --color-text-inverse: #FFFFFF;
+  --color-sidebar-text: #A8BFD1;
 
   /* Semantic pairs */
   --color-success: #2F6B4F;
@@ -80,14 +80,14 @@
   --border-base: 1px solid var(--color-border-strong);
 
   /* Elevation and focus */
-  --shadow-xs: 0 1px 3px rgba(47, 29, 21, .06);
-  --shadow-sm: 0 2px 8px rgba(47, 29, 21, .09);
-  --shadow-md: 0 8px 24px rgba(47, 29, 21, .13);
-  --shadow-lg: 0 18px 48px rgba(47, 29, 21, .18);
-  --focus-ring: 0 0 0 3px rgba(138, 90, 59, .25);
+  --shadow-xs: 0 1px 3px rgba(16, 42, 62, .04);
+  --shadow-sm: 0 2px 8px rgba(16, 42, 62, .05);
+  --shadow-md: 0 8px 24px rgba(16, 42, 62, .09);
+  --shadow-lg: 0 18px 48px rgba(16, 42, 62, .14);
+  --focus-ring: 0 0 0 3px rgba(23, 109, 166, .25);
 
   /* Typography */
-  --font-display: 'Playfair Display', Georgia, serif;
+  --font-display: 'Source Sans 3', system-ui, -apple-system, sans-serif;
   --font-body: 'Source Sans 3', system-ui, -apple-system, sans-serif;
   --font-size-xs: .75rem;
   --font-size-sm: .875rem;
